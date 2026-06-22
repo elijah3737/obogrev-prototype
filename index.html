@@ -12,10 +12,11 @@
   <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
+  <a class="skip" href="#main">К основному содержимому</a>
 
   <!-- TOP BAR -->
   <div class="topbar"><div class="wrap topbar__in">
-    <nav class="topbar__links">
+    <nav class="topbar__links" aria-label="Служебное меню">
       <a href="#/page/about">О нас</a><a href="#/page/blog">Блог</a><a href="#/page/reviews">Отзывы</a>
       <a href="#/page/b2b">Купить оптом</a><a href="#/page/delivery">Доставка</a><a href="#/page/payment">Оплата</a><a href="#/page/contacts">Контакты</a>
     </nav>
@@ -30,6 +31,9 @@
   <!-- HEADER -->
   <header class="header" id="header">
     <div class="wrap header__main">
+      <button class="burger" id="burger" aria-label="Меню" aria-expanded="false">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
+      </button>
       <a class="logo" href="#/">
         <span class="logo__mark" aria-hidden="true"><span></span></span>
         <span class="logo__txt">Brand&nbsp;logo<small>ваш поставщик тепла с 2010 г</small></span>
@@ -38,37 +42,37 @@
         <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg>
         Каталог
       </button>
-      <div class="search">
-        <input type="text" placeholder="введите наименование товара…" aria-label="Поиск по каталогу">
-        <button class="search__btn" type="button">найти</button>
-      </div>
+      <form class="search" id="searchForm" role="search">
+        <input id="searchInput" type="search" placeholder="введите наименование товара…" aria-label="Поиск по каталогу">
+        <button class="search__btn" type="submit">найти</button>
+      </form>
       <div class="header__icons">
-        <a class="hicon" href="#/" aria-label="Сравнение">
-          <span class="hicon__ic"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v18M5 7h14M5 7l-3 6h6Zm14 0-3 6h6ZM2 13a3 3 0 0 0 6 0M16 13a3 3 0 0 0 6 0"/></svg><i class="hicon__b">0</i></span>
+        <button class="hicon" id="cmpbtn" aria-label="Сравнение">
+          <span class="hicon__ic"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v18M5 7h14M5 7l-3 6h6Zm14 0-3 6h6ZM2 13a3 3 0 0 0 6 0M16 13a3 3 0 0 0 6 0"/></svg><i class="hicon__b" id="cmpcount">0</i></span>
           <span>Сравнение</span>
-        </a>
+        </button>
         <button class="hicon" id="cartbtn" aria-label="Корзина">
           <span class="hicon__ic"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="20" r="1.5"/><circle cx="18" cy="20" r="1.5"/><path d="M2 3h3l2.4 12.5a1.5 1.5 0 0 0 1.5 1.2h8.3a1.5 1.5 0 0 0 1.5-1.2L22 7H6"/></svg><i class="hicon__b" id="cartcount">0</i></span>
           <span>Корзина</span>
         </button>
-        <a class="hicon" href="#/" aria-label="Избранное">
-          <span class="hicon__ic"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20s-7-4.5-9.3-9C1 7.5 3 4 6.5 4 9 4 12 7 12 7s3-3 5.5-3C21 4 23 7.5 21.3 11 19 15.5 12 20 12 20Z"/></svg><i class="hicon__b">0</i></span>
+        <button class="hicon" id="favbtn" aria-label="Избранное">
+          <span class="hicon__ic"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20s-7-4.5-9.3-9C1 7.5 3 4 6.5 4 9 4 12 7 12 7s3-3 5.5-3C21 4 23 7.5 21.3 11 19 15.5 12 20 12 20Z"/></svg><i class="hicon__b" id="favcount">0</i></span>
           <span>Избранное</span>
-        </a>
-        <a class="hicon" href="#/" aria-label="Личный кабинет">
+        </button>
+        <button class="hicon" id="lkbtn" aria-label="Личный кабинет">
           <span class="hicon__ic"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-6 8-6s8 2 8 6"/></svg></span>
           <span>ЛК</span>
-        </a>
+        </button>
       </div>
     </div>
-    <nav class="nav"><div class="wrap nav__in">
+    <nav class="nav" aria-label="Каталог"><div class="wrap nav__in">
       <div class="nav__links" id="navlinks"></div>
       <a class="nav__sale" href="#/cat/greyushchiy-kabel">% Акции</a>
     </div></nav>
     <div class="mega" id="mega"></div>
   </header>
 
-  <main id="main"></main>
+  <main id="main" tabindex="-1"></main>
 
   <!-- FOOTER -->
   <footer class="footer"><div class="wrap">
@@ -96,21 +100,27 @@
     </div>
   </div></footer>
 
+  <!-- MOBILE MENU -->
+  <aside class="mobmenu" id="mobmenu" aria-label="Мобильное меню">
+    <div class="mobmenu__head"><b>Меню</b><button class="dclose" id="mobclose" aria-label="Закрыть">✕</button></div>
+    <div class="mobmenu__body" id="mobmenubody"></div>
+  </aside>
+
   <!-- CART DRAWER -->
-  <aside class="drawer" id="drawer" aria-label="Корзина">
+  <aside class="drawer" id="drawer" aria-label="Корзина" role="dialog" aria-modal="true">
     <div class="drawer__head"><h3>Корзина</h3><button class="dclose" id="cartclose" aria-label="Закрыть">✕</button></div>
     <div class="drawer__body" id="cartbody"></div>
     <div class="drawer__foot">
       <div class="drawer__total"><span>Итого</span><b class="tnum" id="carttotal">0 ₽</b></div>
-      <button class="btn btn--blue btn--block" onclick="toast('Это прототип — оформление заказа в продакшене')">Оформить заказ</button>
+      <button class="btn btn--blue btn--block" data-checkout>Оформить заказ</button>
     </div>
   </aside>
 
   <!-- MODAL -->
-  <div class="modal" id="modal" role="dialog" aria-modal="true"><div class="modal__card" id="modalbody"></div></div>
+  <div class="modal" id="modal" role="dialog" aria-modal="true" aria-label="Форма"><div class="modal__card" id="modalbody"></div></div>
 
   <div class="scrim" id="scrim"></div>
-  <div class="toasts" id="toasts"></div>
+  <div class="toasts" id="toasts" role="status" aria-live="polite" aria-atomic="true"></div>
 
   <script src="js/data.js"></script>
   <script src="js/app.js"></script>

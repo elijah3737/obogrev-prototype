@@ -255,8 +255,7 @@ CATS.forEach(cat => {
     const [name, brand, price, facets, unitOverride] = it;
     const inStock = ![3, 7].includes(i);
     const badge = i === 0 ? 'hit' : i === 3 ? 'sale' : null;
-    const guarantee = (facets && facets.g) || cat.g;
-    const oldPrice = badge === 'sale' ? Math.round(price * 1.18 / 10) * 10 : null;
+    const oldPrice = badge === 'sale' ? Math.round(price * 1.18) : null; // фикс. скидка 15%
     PRODUCTS.push({
       id: `${cat.slug}-${i + 1}`,
       cat: cat.slug,
@@ -265,10 +264,10 @@ CATS.forEach(cat => {
       facets: facets || {},
       stock: inStock ? 'in' : 'order',
       delivery: inStock ? ['1 день','1 день','2 дня','2–3 дня','1 день','2 дня'][i % 6] : '5–7 дней',
-      guarantee,
+      guarantee: cat.g,
       badge,
       oldPrice,
-      discount: oldPrice ? Math.round((1 - price / oldPrice) * 100) : 0,
+      discount: oldPrice ? 15 : 0,
       save: oldPrice ? oldPrice - price : 0,
       reviews: [15, 8, 23, 5, 11, 4, 19, 7][i % 8],
       rating: i % 7 === 0 ? 4 : 5,
@@ -278,3 +277,35 @@ CATS.forEach(cat => {
 
 const byCat = slug => PRODUCTS.filter(p => p.cat === slug);
 const catBy = slug => CATS.find(c => c.slug === slug);
+
+// — Навигация «по задаче» (точка отрыва) —
+const TASKS = [
+  { name: 'Обогрев кровли и водостоков', icon: 'roof', cat: 'greyushchiy-kabel' },
+  { name: 'Обогрев трубопроводов', icon: 'pipe', cat: 'greyushchiy-kabel' },
+  { name: 'Снеготаяние площадок', icon: 'snow', cat: 'greyushchiy-kabel' },
+  { name: 'Тёплый пол', icon: 'floor', cat: 'elektricheskie-tyeplye-poly' },
+  { name: 'Защита от протечек', icon: 'drop', cat: 'sistemy-zashchity-ot-protechek-vody' },
+  { name: 'Обогрев резервуаров', icon: 'tank', cat: 'termochekhly' },
+];
+
+// — Готовые комплекты под задачу (точка отрыва: продаём решение) —
+const KITS = [
+  { id: 'kit-vodoprovod', name: 'Комплект обогрева водопровода, 20 м', icon: 'pipe', price: 6490, old: 7640,
+    items: ['Саморег. кабель SAMREG 16-2, 20 м', 'Терморегулятор с датчиком', 'Комплект заделки', 'Монтажная лента'] },
+  { id: 'kit-krovlya', name: 'Антиобледенение кровли и водостоков', icon: 'roof', price: 18900, old: 22300,
+    items: ['Греющий кабель 60 м', 'Терморегулятор + датчик осадков', 'Крепёж', 'Соединительная коробка'] },
+  { id: 'kit-pol', name: 'Тёплый пол под ванную, 4 м²', icon: 'floor', price: 7990, old: 9400,
+    items: ['Нагревательный мат 4 м²', 'Терморегулятор сенсорный', 'Гофра + датчик', 'Монтажная лента'] },
+  { id: 'kit-protechka', name: 'Защита от протечек на квартиру', icon: 'drop', price: 14900, old: 17500,
+    items: ['Контроллер Neptun', '2 крана с электроприводом', '4 датчика протечки', 'Монтажный комплект'] },
+];
+
+// — Кросс-сейл: из каких категорий тянуть сопутствующее —
+const CROSS = {
+  cable: ['termoregulyatory-reguliruyushchaya-apparatura', 'komplektuyushchie-dlya-kabeley-teplykh-polov'],
+  floor: ['termoregulyatory-reguliruyushchaya-apparatura', 'komplektuyushchie-dlya-kabeley-teplykh-polov'],
+  thermo: ['greyushchiy-kabel', 'komplektuyushchie-dlya-kabeley-teplykh-polov'],
+  leak: ['komplektuyushchie-dlya-kabeley-teplykh-polov', 'termoregulyatory-reguliruyushchaya-apparatura'],
+  ex: ['greyushchiy-kabel', 'komplektuyushchie-dlya-kabeley-teplykh-polov'],
+  generic: ['komplektuyushchie-dlya-kabeley-teplykh-polov', 'termoregulyatory-reguliruyushchaya-apparatura'],
+};
