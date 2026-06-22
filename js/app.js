@@ -372,7 +372,7 @@ function renderFacet(facet, products, group) {
   let labels = Object.keys(counts); if (!labels.length) return '';
   const order = ['до 2 000 ₽','2 000–10 000 ₽','от 10 000 ₽','≤ 18 Вт/м','19–30 Вт/м','> 30 Вт/м','< 150 Вт/м²','150–170 Вт/м²','> 170 Вт/м²','≤ 2 м²','2–5 м²','> 5 м²'];
   labels.sort((a, b) => (order.indexOf(a) - order.indexOf(b)) || a.localeCompare(b, 'ru'));
-  return `<fieldset class="fgroup"><legend>${facet.label}</legend>${labels.map(l => `<label class="fopt"><input type="checkbox" data-key="${facet.key}" value="${l}"> ${l} <span class="n">${counts[l]}</span></label>`).join('')}</fieldset>`;
+  return `<div class="fgroup" role="group" aria-label="${facet.label}"><b>${facet.label}</b>${labels.map(l => `<label class="fopt"><input type="checkbox" data-key="${facet.key}" value="${l}"> ${l} <span class="n">${counts[l]}</span></label>`).join('')}</div>`;
 }
 function plural(n) { const a = n % 10, b = n % 100; return (a === 1 && b !== 11) ? 'товар' : (a >= 2 && a <= 4 && (b < 10 || b >= 20)) ? 'товара' : 'товаров'; }
 function years(n) { const a = n % 10, b = n % 100; const w = (a === 1 && b !== 11) ? 'год' : (a >= 2 && a <= 4 && (b < 10 || b >= 20)) ? 'года' : 'лет'; return n + ' ' + w; }
