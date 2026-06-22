@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Brand logo — системы обогрева (прототип)</title>
+  <meta name="description" content="Прототип интернет-магазина систем обогрева: греющий кабель, тёплые полы, защита от протечек, климат.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/tokens.css">
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+
+  <!-- TOP BAR -->
+  <div class="topbar"><div class="wrap topbar__in">
+    <nav class="topbar__links">
+      <a href="#/page/about">О нас</a><a href="#/page/blog">Блог</a><a href="#/page/reviews">Отзывы</a>
+      <a href="#/page/b2b">Купить оптом</a><a href="#/page/delivery">Доставка</a><a href="#/page/payment">Оплата</a><a href="#/page/contacts">Контакты</a>
+    </nav>
+    <div class="topbar__phones">
+      <a href="tel:+78127038355">+7 (812) 703-83-55</a>
+      <a href="tel:+74957890578">+7 (495) 789-05-78</a>
+      <a href="tel:+78007707750">+7 (800) 770-77-50</a>
+      <a class="topbar__mail" href="mailto:info@brand.ru">info@brand.ru</a>
+    </div>
+  </div></div>
+
+  <!-- HEADER -->
+  <header class="header" id="header">
+    <div class="wrap header__main">
+      <a class="logo" href="#/">
+        <span class="logo__mark" aria-hidden="true"><span></span></span>
+        <span class="logo__txt">Brand&nbsp;logo<small>ваш поставщик тепла с 2010 г</small></span>
+      </a>
+      <button class="catbtn" id="catalogbtn" aria-label="Открыть каталог">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg>
+        Каталог
+      </button>
+      <div class="search">
+        <input type="text" placeholder="введите наименование товара…" aria-label="Поиск по каталогу">
+        <button class="search__btn" type="button">найти</button>
+      </div>
+      <div class="header__icons">
+        <a class="hicon" href="#/" aria-label="Сравнение">
+          <span class="hicon__ic"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v18M5 7h14M5 7l-3 6h6Zm14 0-3 6h6ZM2 13a3 3 0 0 0 6 0M16 13a3 3 0 0 0 6 0"/></svg><i class="hicon__b">0</i></span>
+          <span>Сравнение</span>
+        </a>
+        <button class="hicon" id="cartbtn" aria-label="Корзина">
+          <span class="hicon__ic"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="20" r="1.5"/><circle cx="18" cy="20" r="1.5"/><path d="M2 3h3l2.4 12.5a1.5 1.5 0 0 0 1.5 1.2h8.3a1.5 1.5 0 0 0 1.5-1.2L22 7H6"/></svg><i class="hicon__b" id="cartcount">0</i></span>
+          <span>Корзина</span>
+        </button>
+        <a class="hicon" href="#/" aria-label="Избранное">
+          <span class="hicon__ic"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20s-7-4.5-9.3-9C1 7.5 3 4 6.5 4 9 4 12 7 12 7s3-3 5.5-3C21 4 23 7.5 21.3 11 19 15.5 12 20 12 20Z"/></svg><i class="hicon__b">0</i></span>
+          <span>Избранное</span>
+        </a>
+        <a class="hicon" href="#/" aria-label="Личный кабинет">
+          <span class="hicon__ic"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-6 8-6s8 2 8 6"/></svg></span>
+          <span>ЛК</span>
+        </a>
+      </div>
+    </div>
+    <nav class="nav"><div class="wrap nav__in">
+      <div class="nav__links" id="navlinks"></div>
+      <a class="nav__sale" href="#/cat/greyushchiy-kabel">% Акции</a>
+    </div></nav>
+    <div class="mega" id="mega"></div>
+  </header>
+
+  <main id="main"></main>
+
+  <!-- FOOTER -->
+  <footer class="footer"><div class="wrap">
+    <div class="footer__grid">
+      <div><h4>Каталог</h4><div id="footcats"></div></div>
+      <div><h4>Услуги</h4>
+        <a href="#/services">Обогрев кровли и водостоков</a>
+        <a href="#/services">Обогрев открытых площадей</a>
+        <a href="#/services">Обогрев резервуаров</a>
+        <a href="#/services">Обогрев трубопроводов</a>
+      </div>
+      <div><h4>Информация</h4>
+        <a href="#/cat/greyushchiy-kabel">Акции</a><a href="#/page/about">О нас</a><a href="#/page/blog">Блог</a>
+        <a href="#/page/reviews">Отзывы</a><a href="#/page/delivery">Доставка</a><a href="#/page/payment">Оплата</a><a href="#/page/contacts">Контакты</a>
+      </div>
+      <div>
+        <h4>Мы в соцсетях</h4>
+        <div class="footer__soc"><a href="#/">ВКонтакте</a><a href="#/">YouTube</a><a href="#/">Яндекс Дзен</a><a href="#/">Telegram</a></div>
+        <div class="footer__rating"><b>★ 4,9</b><span>Рейтинг организации в Яндексе</span></div>
+      </div>
+    </div>
+    <div class="footer__copy">
+      <span>© 2010–2026, Brand logo. Прототип сайта.</span>
+      <span>Санкт-Петербург</span>
+    </div>
+  </div></footer>
+
+  <!-- CART DRAWER -->
+  <aside class="drawer" id="drawer" aria-label="Корзина">
+    <div class="drawer__head"><h3>Корзина</h3><button class="dclose" id="cartclose" aria-label="Закрыть">✕</button></div>
+    <div class="drawer__body" id="cartbody"></div>
+    <div class="drawer__foot">
+      <div class="drawer__total"><span>Итого</span><b class="tnum" id="carttotal">0 ₽</b></div>
+      <button class="btn btn--blue btn--block" onclick="toast('Это прототип — оформление заказа в продакшене')">Оформить заказ</button>
+    </div>
+  </aside>
+
+  <!-- MODAL -->
+  <div class="modal" id="modal" role="dialog" aria-modal="true"><div class="modal__card" id="modalbody"></div></div>
+
+  <div class="scrim" id="scrim"></div>
+  <div class="toasts" id="toasts"></div>
+
+  <script src="js/data.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
