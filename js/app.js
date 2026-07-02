@@ -158,13 +158,12 @@ function cardMedia(p) {
   const img = CAT_IMG[p.cat] || 'cat/cable.jpg';
   return `<a class="pcard__media" href="#/product/${p.id}" aria-label="${p.name}">
       <img class="pcard__photo" src="assets/${img}" alt="${p.name}" loading="lazy">
-      <span class="pcard__brand">${p.brand}</span>
       <div class="pcard__pills">${pills(p)}</div>
     </a>`;
 }
 function card(p) {
   return `<article class="pcard" data-id="${p.id}">
-    ${badgeHtml(p)}
+    <div class="pcard__tl">${badgeHtml(p)}<span class="pcard__brand">${p.brand}</span></div>
     <div class="pcard__tools">
       <button data-fav data-id="${p.id}" class="${FAV.has(p.id) ? 'on' : ''}" title="В избранное" aria-label="В избранное" aria-pressed="${FAV.has(p.id)}">${svg('heart', 16)}</button>
       <button data-cmp data-id="${p.id}" class="${CMP.has(p.id) ? 'on' : ''}" title="К сравнению" aria-label="К сравнению" aria-pressed="${CMP.has(p.id)}">${svg('compare', 16)}</button>
