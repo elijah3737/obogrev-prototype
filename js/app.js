@@ -39,6 +39,9 @@ const P = {
   phone:'<path d="M5 3h4l2 5-2.5 1.5a12 12 0 0 0 5 5L16 12l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 5a2 2 0 0 1 2-2Z"/>',
   chevL:'<path d="M15 5l-7 7 7 7"/>',
   chevR:'<path d="M9 5l7 7-7 7"/>',
+  file:'<path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8Z"/><path d="M14 3v5h5M9 13h6M9 17h4"/>',
+  dl:'<path d="M12 3v12m0 0 4-4m-4 4-4-4"/><path d="M4 17v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-2"/>',
+  star:'<path d="M12 3l2.6 5.6 6.1.7-4.5 4.2 1.2 6L12 16.9 6.6 19.5l1.2-6L3.3 9.3l6.1-.7Z"/>',
 };
 const svg = (n, s = 24) => `<svg width="${s}" height="${s}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${P[n] || ''}</svg>`;
 const fmt = n => n.toLocaleString('ru-RU').replace(/,/g, ' ') + ' ₽';
@@ -463,6 +466,23 @@ function renderProduct(id) {
   const variants = cat.group === 'cable' ? ['16-2', '24-2', '30-2', '16-2 CR', '24-2 CR'] : null;
   const cross = crossSell(p);
   const seen = getSeen().filter(x => x !== id).map(x => PRODUCTS.find(y => y.id === x)).filter(Boolean).slice(0, 5);
+  const specRows = rows.concat([['Гарантия', years(p.guarantee)], ['Наличие', (p.stock === 'in' ? 'В наличии · ' : 'Под заказ · ') + p.delivery]]);
+  const docs = [
+    ['Сертификат соответствия ТР ТС', 'PDF · 1,2 МБ'],
+    ['Паспорт изделия', 'PDF · 640 КБ'],
+    ['Инструкция по монтажу и подключению', 'PDF · 2,1 МБ'],
+    [`Прайс-лист ${p.brand}`, 'XLSX · 380 КБ'],
+  ];
+  const revs = [
+    ['Игорь М.', '12.05.2026', 5, 'Заказывали на объект, приехало на следующий день, всё с документами. Менеджер помог рассчитать нужную длину — спасибо.'],
+    ['Светлана', '28.04.2026', 5, 'Брали для тёплого пола в ванную. Работает отлично, терморегулятор настроили за пять минут. Рекомендую.'],
+  ];
+  const qas = [
+    ['Подходит для укладки в стяжку?', 'Да, эту серию можно монтировать как в стяжку, так и в плиточный клей. Подберём мощность под ваше помещение — оставьте заявку.'],
+    ['Даёте документы для юрлиц?', 'Да, полный пакет: сертификат соответствия, паспорт изделия, счёт с НДС и УПД. Работаем по безналу с любыми ТК.'],
+    ['Какая гарантия?', `Заводская гарантия — ${years(p.guarantee)}. Сохраняйте паспорт изделия и чек, при монтаже соблюдайте инструкцию.`],
+  ];
+  const stars = n => '<span class="rstars" aria-hidden="true">' + '★★★★★'.slice(0, n) + '<i>' + '★★★★★'.slice(n) + '</i></span>';
   mainEl().innerHTML = `
   <section class="section"><div class="wrap">
     <nav class="crumbs" aria-label="Хлебные крошки"><a href="#/">Главная</a> / <a href="#/cat/${cat.slug}">${cat.name}</a> / <span>${p.name}</span></nav>
@@ -509,19 +529,45 @@ function renderProduct(id) {
       <div class="i">${svg('headset', 28)}<div><b>Профессиональная консультация</b><small>Расчёт и подбор аналогов</small></div></div>
       <div class="i">${svg('truck', 28)}<div><b>Оперативная доставка</b><small>По всей России и СНГ до двери</small></div></div>
     </div>
-    <div class="pp__sec pp__desc"><h2>Описание</h2>
-      <p>${p.name} — продукция бренда ${p.brand}. ${cat.short}. Применяется для бытового и промышленного обогрева, поставляется со склада в Санкт-Петербурге.</p>
-      <p class="muted">Это демо-прототип: описание и характеристики приведены для примера, в проде приедут по API-синхронизации с заводом.</p>
-    </div>
-    <div class="pp__sec" id="allspecs"><h2>Характеристики</h2>
-      <table class="pp__spectable"><tbody>${rows.concat([['Гарантия', years(p.guarantee)],['Наличие', (p.stock === 'in' ? 'В наличии · ' : 'Под заказ · ') + p.delivery]]).map(r => `<tr><td>${r[0]}</td><td>${r[1]}</td></tr>`).join('')}</tbody></table>
+    <div class="pp__tabs" id="allspecs">
+      <div class="pp__tabbar" role="tablist">
+        <button type="button" class="pptab on" data-pt="char" role="tab" aria-selected="true">Характеристики</button>
+        <button type="button" class="pptab" data-pt="desc" role="tab" aria-selected="false">Описание</button>
+        <button type="button" class="pptab" data-pt="docs" role="tab" aria-selected="false">Тех. документы</button>
+        <button type="button" class="pptab" data-pt="rev" role="tab" aria-selected="false">Отзывы</button>
+        <button type="button" class="pptab" data-pt="qa" role="tab" aria-selected="false">Вопрос / ответ</button>
+      </div>
+      <div class="pp__panel on" data-pp="char" role="tabpanel">
+        <table class="pp__spectable"><tbody>${specRows.map(r => `<tr><td>${r[0]}</td><td>${r[1]}</td></tr>`).join('')}</tbody></table>
+      </div>
+      <div class="pp__panel pp__desc" data-pp="desc" role="tabpanel">
+        <p>${p.name} — продукция бренда ${p.brand}. ${cat.short}. Применяется для бытового и промышленного обогрева, поставляется со склада в Санкт-Петербурге.</p>
+        <p>Оборудование сертифицировано, комплектуется паспортом изделия и инструкцией по монтажу. Наши инженеры помогут рассчитать мощность и подобрать аналог под ваш объект.</p>
+        <p class="muted">Это демо-прототип: описание приведено для примера, в проде приедет по API-синхронизации с заводом.</p>
+      </div>
+      <div class="pp__panel" data-pp="docs" role="tabpanel">
+        <div class="pp__docs">${docs.map(d => `<a class="pp__doc" role="button" tabindex="0"><span class="pp__doc-ic">${svg('file', 22)}</span><span class="pp__doc-t"><b>${d[0]}</b><small>${d[1]}</small></span><span class="pp__doc-dl">${svg('dl', 20)}</span></a>`).join('')}</div>
+      </div>
+      <div class="pp__panel" data-pp="rev" role="tabpanel">
+        <div class="pp__revhead"><div class="pp__revscore"><b class="tnum">4,9</b>${stars(5)}<span>${revs.length + 13} отзывов</span></div><button type="button" class="btn btn--blueline" data-q>Оставить отзыв</button></div>
+        <div class="pp__revlist">${revs.map(r => `<div class="pp__rev"><div class="pp__rev-h"><b>${r[0]}</b>${stars(r[2])}<time>${r[1]}</time></div><p>${r[3]}</p></div>`).join('')}</div>
+      </div>
+      <div class="pp__panel" data-pp="qa" role="tabpanel">
+        <div class="pp__qalist">${qas.map(q => `<div class="pp__qa"><b>${q[0]}</b><p>${q[1]}</p></div>`).join('')}</div>
+        <button type="button" class="btn btn--blueline" data-q style="margin-top:var(--space-4)">Задать свой вопрос</button>
+      </div>
     </div>
     ${ppSlider('С этим берут', cross)}
     ${ppSlider('Вы недавно смотрели', seen)}
   </div></section>`;
   mainEl().querySelectorAll('.vbtn').forEach(b => b.addEventListener('click', () => { mainEl().querySelectorAll('.vbtn').forEach(x => x.setAttribute('aria-pressed', 'false')); b.setAttribute('aria-pressed', 'true'); }));
   mainEl().querySelectorAll('.pp__thumb').forEach(t => t.addEventListener('click', () => { mainEl().querySelectorAll('.pp__thumb').forEach(x => x.classList.remove('on')); t.classList.add('on'); }));
-  const q = $('[data-q]'); if (q) q.addEventListener('click', () => openForm('Задать вопрос', 'Задайте вопрос о товаре — менеджер ответит в течение 5 минут.'));
+  mainEl().querySelectorAll('.pptab').forEach(t => t.addEventListener('click', () => {
+    const k = t.getAttribute('data-pt');
+    mainEl().querySelectorAll('.pptab').forEach(x => { const on = x === t; x.classList.toggle('on', on); x.setAttribute('aria-selected', on); });
+    mainEl().querySelectorAll('.pp__panel').forEach(x => x.classList.toggle('on', x.getAttribute('data-pp') === k));
+  }));
+  $$('[data-q]').forEach(q => q.addEventListener('click', () => openForm('Задать вопрос', 'Задайте вопрос о товаре — менеджер ответит в течение 5 минут.')));
   const disc = $('[data-disc]'); if (disc) disc.addEventListener('click', () => openForm('Хочу скидку!', 'Оставьте контакты — предложим персональную цену на этот товар.', 'Получить скидку'));
   const mail = $('[data-mail]'); if (mail) mail.addEventListener('click', () => openForm('Заявка на почту', 'Пришлём счёт и КП на email. Удобно для юрлиц.', 'Отправить'));
   const all = $('[data-allspecs]'); if (all) all.addEventListener('click', () => $('#allspecs').scrollIntoView({ behavior: 'smooth' }));

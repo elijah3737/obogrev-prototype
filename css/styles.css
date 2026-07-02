@@ -282,6 +282,38 @@ img, svg { display: block; max-width: 100%; }
 .pp__spectable td { padding: var(--space-8) 0; border-bottom: var(--rule); }
 .pp__spectable td:first-child { color: var(--color-ink-3); width: 50%; }
 .pp__spectable td:last-child { font-weight: 600; }
+/* Вкладки карточки товара (как у донора) */
+.pp__tabs { margin-top: var(--space-24); }
+.pp__tabbar { display: flex; flex-wrap: wrap; gap: var(--space-12); margin-bottom: var(--space-20); }
+.pptab { font-family: var(--font-display); font-weight: 700; font-size: var(--text-base); color: var(--color-navy); background: #fff; border: 2px solid var(--color-blue-weak); border-radius: 999px; padding: 13px 28px; cursor: pointer; transition: background var(--dur) var(--ease-out), color var(--dur) var(--ease-out), border-color var(--dur) var(--ease-out); }
+.pptab:hover { border-color: var(--color-blue); }
+.pptab.on { background: var(--color-blue); border-color: var(--color-blue); color: #fff; }
+.pp__panel { display: none; }
+.pp__panel.on { display: block; animation: fadeIn var(--dur) var(--ease-out); }
+@keyframes fadeIn { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: none; } }
+.pp__desc p { color: var(--color-ink-2); margin: 0 0 var(--space-8); max-width: 780px; line-height: 1.6; }
+.pp__docs { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--space-12); max-width: 780px; }
+.pp__doc { display: flex; align-items: center; gap: var(--space-12); padding: var(--space-12) var(--space-16); border: var(--rule); border-radius: 14px; background: #fff; cursor: pointer; transition: border-color var(--dur) var(--ease-out), box-shadow var(--dur) var(--ease-out); }
+.pp__doc:hover { border-color: var(--color-blue); box-shadow: 0 6px 18px rgba(0,88,255,.10); }
+.pp__doc-ic { display: grid; place-items: center; width: 42px; height: 42px; border-radius: 10px; background: var(--color-blue-weak); color: var(--color-blue); flex: none; }
+.pp__doc-t { flex: 1; min-width: 0; }
+.pp__doc-t b { display: block; font-size: var(--text-sm); color: var(--color-navy); }
+.pp__doc-t small { color: var(--color-ink-3); font-size: var(--text-xs); }
+.pp__doc-dl { color: var(--color-ink-3); flex: none; }
+.pp__doc:hover .pp__doc-dl { color: var(--color-blue); }
+.rstars, .pp__rev-h .rstars { color: var(--color-orange-l); letter-spacing: 1px; }
+.rstars i { color: var(--color-line-2); font-style: normal; }
+.pp__revhead { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: var(--space-16); padding-bottom: var(--space-16); border-bottom: var(--rule); margin-bottom: var(--space-16); }
+.pp__revscore { display: flex; align-items: center; gap: var(--space-12); }
+.pp__revscore b { font-family: var(--font-display); font-size: 32px; color: var(--color-navy); }
+.pp__revscore span { color: var(--color-ink-3); font-size: var(--text-sm); }
+.pp__revlist, .pp__qalist { display: grid; gap: var(--space-16); max-width: 780px; }
+.pp__rev-h { display: flex; align-items: center; gap: var(--space-8); margin-bottom: 4px; }
+.pp__rev-h b { color: var(--color-navy); }
+.pp__rev-h time { color: var(--color-ink-3); font-size: var(--text-xs); margin-left: auto; }
+.pp__rev p, .pp__qa p { color: var(--color-ink-2); line-height: 1.55; margin: 0; }
+.pp__qa { padding: var(--space-16); border: var(--rule); border-radius: 14px; background: #fff; }
+.pp__qa b { display: block; color: var(--color-navy); margin-bottom: 6px; }
 /* Слайдер похожих товаров (как у донора) */
 .ppslider__head { display: flex; align-items: center; justify-content: space-between; gap: var(--space-16); margin-bottom: var(--space-12); }
 .ppslider__head h2 { margin-bottom: 0; }
