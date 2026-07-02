@@ -321,7 +321,7 @@ img, svg { display: block; max-width: 100%; }
 .qcta__r .pill { align-self: flex-end; background: var(--color-orange); color: #fff; font-weight: 700; font-size: var(--text-sm); padding: var(--space-8) var(--space-16); border-radius: var(--radius-pill); box-shadow: 0 6px 18px -6px rgba(245,130,32,.5); }
 
 /* ============ FOOTER ============ */
-.footer { background: #181b21; color: #aeb4bd; margin-top: var(--space-48); }
+.footer { background: #181b21; color: #aeb4bd; margin-top: var(--space-16); }
 .footer .wrap { padding-block: var(--space-32) var(--space-20); }
 .footer__top { display: flex; justify-content: space-between; align-items: center; gap: var(--space-24); padding-bottom: var(--space-24); border-bottom: 1px solid rgba(255,255,255,.09); flex-wrap: wrap; }
 .footer__brand { display: inline-flex; align-items: center; gap: 12px; }
