@@ -37,6 +37,8 @@ const P = {
   clock:'<circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/>',
   card:'<rect x="2" y="5" width="20" height="14" rx="2"/><path d="M2 10h20"/>',
   phone:'<path d="M5 3h4l2 5-2.5 1.5a12 12 0 0 0 5 5L16 12l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 5a2 2 0 0 1 2-2Z"/>',
+  chevL:'<path d="M15 5l-7 7 7 7"/>',
+  chevR:'<path d="M9 5l7 7-7 7"/>',
 };
 const svg = (n, s = 24) => `<svg width="${s}" height="${s}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${P[n] || ''}</svg>`;
 const fmt = n => n.toLocaleString('ru-RU').replace(/,/g, ' ') + ' ₽';
@@ -64,9 +66,9 @@ const NAV = [
   { name: 'Гофротрубы и фитинги', slug: 'gofrirovannaya-truba-i-fitingi' },
 ];
 const FEATURED = [
-  { slug:'greyushchiy-kabel', tint:'t-violet', icon:'cable' }, { slug:'klimat-sistemy', tint:'t-blue', icon:'climate' },
-  { slug:'osveshchenie', tint:'t-amber', icon:'lamp' }, { slug:'elektrika', tint:'t-green', icon:'bolt' },
-  { slug:'elektricheskie-tyeplye-poly', tint:'t-orange', icon:'floor' }, { slug:'santehnika', tint:'t-cyan', icon:'drop' },
+  { slug:'greyushchiy-kabel', tint:'t-violet', icon:'cable', img:'cable' }, { slug:'klimat-sistemy', tint:'t-blue', icon:'climate', img:'climate' },
+  { slug:'osveshchenie', tint:'t-amber', icon:'lamp', img:'light' }, { slug:'elektrika', tint:'t-green', icon:'bolt', img:'electric' },
+  { slug:'elektricheskie-tyeplye-poly', tint:'t-orange', icon:'floor', img:'floor' }, { slug:'santehnika', tint:'t-cyan', icon:'drop', img:'plumbing' },
 ];
 function buildShell() {
   $('#navlinks').innerHTML = NAV.map(it => {
@@ -119,6 +121,17 @@ function badgeHtml(p) {
   if (p.facets.prim) return `<span class="pcard__badge b-blue">${p.facets.prim}</span>`;
   return '<span class="pcard__badge b-green">Новинка</span>';
 }
+function cardMedia(p) {
+  const frames = [catBy(p.cat).icon, 'cert', 'box'];
+  return `<div class="pcard__media" data-media>
+      <span class="pcard__brand">${p.brand}</span>
+      <div class="pcard__track">${frames.map(ic => `<a class="pcard__frame" href="#/product/${p.id}" aria-label="${p.name}">${svg(ic, 92)}</a>`).join('')}</div>
+      <button type="button" class="pcard__marr pcard__marr--prev" data-mprev aria-label="Предыдущее фото">${svg('chevL', 18)}</button>
+      <button type="button" class="pcard__marr pcard__marr--next" data-mnext aria-label="Следующее фото">${svg('chevR', 18)}</button>
+      <div class="pcard__pills">${pills(p)}</div>
+    </div>
+    <div class="pcard__dots" role="tablist" aria-label="Фото товара">${frames.map((_, i) => `<button type="button" class="${i === 0 ? 'on' : ''}" data-mdot="${i}" aria-label="Фото ${i + 1}" aria-current="${i === 0}"></button>`).join('')}</div>`;
+}
 function card(p) {
   return `<article class="pcard" data-id="${p.id}">
     ${badgeHtml(p)}
@@ -126,8 +139,7 @@ function card(p) {
       <button data-fav data-id="${p.id}" class="${FAV.has(p.id) ? 'on' : ''}" title="В избранное" aria-label="В избранное" aria-pressed="${FAV.has(p.id)}">${svg('heart', 16)}</button>
       <button data-cmp data-id="${p.id}" class="${CMP.has(p.id) ? 'on' : ''}" title="К сравнению" aria-label="К сравнению" aria-pressed="${CMP.has(p.id)}">${svg('compare', 16)}</button>
     </div>
-    <a class="pcard__media" href="#/product/${p.id}" aria-label="${p.name}"><span class="pcard__brand">${p.brand}</span>${svg(catBy(p.cat).icon, 96)}<div class="pcard__pills">${pills(p)}</div></a>
-    <div class="pcard__dots" aria-hidden="true"><i class="on"></i><i></i><i></i></div>
+    ${cardMedia(p)}
     <a class="pcard__name" href="#/product/${p.id}">${p.name}</a>
     <div class="pcard__rev"><a href="#/product/${p.id}">${p.reviews} отзывов</a>${stars(p.rating)}</div>
     <hr class="pcard__div">
@@ -136,7 +148,7 @@ function card(p) {
     ${p.discount ? `<div class="pcard__disc"><span class="pct">−${p.discount}%</span><span class="save">экономия ${p.save}₽</span></div>` : ''}
     <div class="pcard__stockline"><span class="dot dot--${p.stock}"></span>${p.stock === 'in' ? 'В наличии' : 'Под заказ'} · ${p.delivery}</div>
     <div class="pcard__links"><a role="button" tabindex="0" data-1c="${p.id}">Купить в 1 клик</a><a role="button" tabindex="0" data-cheap="${p.id}">Нашли дешевле?</a></div>
-    <div class="pcard__buy"><div class="qty"><button type="button" data-qm aria-label="Меньше">−</button><span>1</span><button type="button" data-qp aria-label="Больше">+</button></div><button class="btn btn--blue btn--sm" data-add="${p.id}">${svg('cart', 16)} В корзину</button></div>
+    <div class="pcard__buy"><div class="qty"><span>1</span><div class="qty__pm"><button type="button" data-qp aria-label="Больше">+</button><button type="button" data-qm aria-label="Меньше">−</button></div></div><button class="btn btn--blue" data-add="${p.id}">${svg('cart', 16)} В корзину</button></div>
   </article>`;
 }
 function grid(list) { return list.length ? list.map(card).join('') : '<div class="empty" style="grid-column:1/-1">Ничего не найдено.</div>'; }
@@ -188,7 +200,7 @@ function renderHome() {
       <div class="tile__ic ${f.tint}">${svg(f.icon, 28)}</div>
       <h2>${c.name}</h2><p>${c.short}</p>
       <span class="btn btn--blueline btn--sm">Подробнее →</span>
-      <div class="tile__art">${svg(f.icon, 200)}</div>
+      <img class="tile__photo" src="assets/cat/${f.img}.jpg" alt="" loading="lazy" width="360" height="260"${f.pos ? ` style="object-position:${f.pos}"` : ''}>
     </a>`; }).join('')}
   </div></div></section>
 
@@ -221,7 +233,7 @@ function renderHome() {
   </div></section>
 
   <section class="section"><div class="wrap"><div class="about">
-    <div class="about__img">${svg('house', 240)}</div>
+    <div class="about__img"><img class="about__photo" src="assets/about.jpg" alt="Кабельный завод — производство греющего кабеля" loading="lazy"></div>
     <div>
       <h2>Работаем на рынке бытового и промышленного обогрева с 2010 года</h2>
       <p class="about__lead"><b>Сфера деятельности</b> — оптово-розничные продажи товаров для бытового и промышленного обогрева. Более 1 млн довольных покупателей и 1000 постоянных юридических лиц.</p>
@@ -668,6 +680,21 @@ function bindCards(root = mainEl()) {
   root.querySelectorAll('[data-fav]').forEach(el => el.addEventListener('click', e => { e.preventDefault(); e.stopPropagation(); toggleFav(el.dataset.id || el.closest('[data-id]')?.dataset.id, el); }));
   root.querySelectorAll('[data-cmp]').forEach(el => el.addEventListener('click', e => { e.preventDefault(); e.stopPropagation(); toggleCmp(el.dataset.id || el.closest('[data-id]')?.dataset.id, el); }));
   root.querySelectorAll('.qty').forEach(q => { const sp = q.querySelector('span'); const m = q.querySelector('[data-qm]'), pl = q.querySelector('[data-qp]'); if (m) m.addEventListener('click', () => sp.textContent = Math.max(1, +sp.textContent - 1)); if (pl) pl.addEventListener('click', () => sp.textContent = +sp.textContent + 1); });
+  root.querySelectorAll('.pcard').forEach(setupCardMedia);
+}
+function setupCardMedia(card) {
+  const track = card.querySelector('.pcard__track'); if (!track) return;
+  const n = track.children.length;
+  const dots = [...card.querySelectorAll('[data-mdot]')];
+  let i = 0;
+  const go = k => { i = (k + n) % n; track.style.transform = `translateX(${-i * 100}%)`; dots.forEach((d, j) => { d.classList.toggle('on', j === i); d.setAttribute('aria-current', j === i); }); };
+  dots.forEach(d => d.addEventListener('click', e => { e.preventDefault(); e.stopPropagation(); go(+d.dataset.mdot); }));
+  const prev = card.querySelector('[data-mprev]'), next = card.querySelector('[data-mnext]');
+  if (prev) prev.addEventListener('click', e => { e.preventDefault(); e.stopPropagation(); go(i - 1); });
+  if (next) next.addEventListener('click', e => { e.preventDefault(); e.stopPropagation(); go(i + 1); });
+  let x0 = null;
+  track.addEventListener('touchstart', e => x0 = e.touches[0].clientX, { passive: true });
+  track.addEventListener('touchend', e => { if (x0 == null) return; const dx = e.changedTouches[0].clientX - x0; if (Math.abs(dx) > 30) go(i + (dx < 0 ? 1 : -1)); x0 = null; });
 }
 
 /* ---------- роутинг ---------- */
