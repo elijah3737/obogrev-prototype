@@ -452,10 +452,10 @@ function renderProduct(id) {
     </div>
     <div class="pp__grid">
       <div class="pp__gallery">
-        <div class="pp__thumbs">${[0,1,2,3].map(i => `<button class="pp__thumb ${i===0?'on':''}" aria-label="Фото ${i+1}">${svg(cat.icon, 30)}</button>`).join('')}</div>
+        <div class="pp__thumbs">${[0,1,2,3].map(i => `<button class="pp__thumb ${i===0?'on':''}" aria-label="Фото ${i+1}"><img src="assets/${CAT_IMG[p.cat] || 'cat/cable.jpg'}" alt="" loading="lazy"></button>`).join('')}</div>
         <div class="pp__main">
+          <img class="pp__photo" src="assets/${CAT_IMG[p.cat] || 'cat/cable.jpg'}" alt="${p.name}">
           <div class="pp__mbadges">${p.badge === 'sale' ? '<span>Распродажа</span>' : ''}<span>Оптовые цены — B2B</span></div>
-          ${svg(cat.icon, 160)}
           <div class="pp__mpills">${mp.map(t => `<span>${t}</span>`).join('')}</div>
         </div>
       </div>
