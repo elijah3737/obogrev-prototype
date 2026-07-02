@@ -155,10 +155,10 @@ function grid(list) { return list.length ? list.map(card).join('') : '<div class
 
 /* ---------- ГЛАВНАЯ ---------- */
 const SLIDES = [
-  { h: 'Цена снижена', p: 'на кондиционеры Ballu, Royal Thermo, Electrolux', icon: 'climate', bg: 'red' },
-  { h: 'Греющий кабель', p: 'саморегулирующийся и резистивный — от 130 ₽/м', icon: 'cable', bg: 'blue' },
-  { h: 'Тёплый пол под ключ', p: 'маты, плёнка и кабель + монтаж бригадой', icon: 'floor', bg: 'orange' },
-  { h: 'Защита от протечек', p: 'готовые комплекты Neptun и Аквасторож на квартиру', icon: 'drop', bg: 'navy' },
+  { h: 'Греющий кабель', p: 'саморегулирующийся и резистивный — от 130 ₽/м', img: 'cat/cable.jpg', cta: 'В каталог', href: '#/cat/greyushchiy-kabel', tone: 'blue' },
+  { h: 'Тёплый пол под ключ', p: 'маты, плёнка и кабель + монтаж бригадой', img: 'cat/floor.jpg', cta: 'Подобрать пол', href: '#/cat/elektricheskie-tyeplye-poly', tone: 'orange' },
+  { h: 'Антиобледенение кровли', p: 'защитим кровлю и водостоки от наледи и сосулек', img: 'kits/krovlya.jpg', cta: 'Смотреть решения', href: '#/cat/greyushchiy-kabel', tone: 'navy' },
+  { h: 'Защита от протечек', p: 'готовые комплекты Neptun и Аквасторож на квартиру', img: 'kits/protechka.jpg', cta: 'Выбрать комплект', href: '#/cat/greyushchiy-kabel', tone: 'teal' },
 ];
 function setupPromo() {
   const track = $('#promoTrack'); if (!track) return;
@@ -188,7 +188,7 @@ function renderHome() {
   <section class="hero"><div class="wrap"><div class="promo">
     <button class="promo__arrow promo__arrow--prev" id="promoPrev" aria-label="Предыдущий слайд">‹</button>
     <div class="promo__track" id="promoTrack">
-      ${SLIDES.map(s => `<div class="pslide promo--${s.bg}"><div class="promo__txt"><p class="promo__h">${s.h}</p><p>${s.p}</p></div><div class="promo__img">${svg(s.icon, 240)}</div></div>`).join('')}
+      ${SLIDES.map(s => `<a class="pslide pslide--${s.tone}" href="${s.href}"><img class="pslide__bg" src="assets/${s.img}" alt="" aria-hidden="true"><div class="pslide__txt"><p class="promo__h">${s.h}</p><p class="pslide__sub">${s.p}</p><span class="btn btn--yellow pslide__cta">${s.cta} →</span></div></a>`).join('')}
     </div>
     <button class="promo__arrow promo__arrow--next" id="promoNext" aria-label="Следующий слайд">›</button>
     <div class="promo__dots" id="promoDots">${SLIDES.map((s, i) => `<button class="${i === 0 ? 'on' : ''}" data-slide="${i}" aria-label="Слайд ${i + 1}" aria-current="${i === 0}"></button>`).join('')}</div>
@@ -206,7 +206,7 @@ function renderHome() {
 
   <section class="section"><div class="wrap">
     <div class="sechead"><h2>Подберите по задаче</h2><p>Решение под конкретный объект — от частного дома до промышленности</p></div>
-    <div class="tasknav">${TASKS.map(t => `<a class="tasknav__i" href="#/cat/${t.cat}">${svg(t.icon, 26)}<span>${t.name}</span></a>`).join('')}</div>
+    <div class="tasknav">${TASKS.map(t => `<a class="tasknav__i" href="#/cat/${t.cat}"><span class="tasknav__ic">${svg(t.icon, 24)}</span><b>${t.name}</b><span class="tasknav__arr">Подобрать →</span></a>`).join('')}</div>
   </div></section>
 
   <section class="section"><div class="wrap"><a class="bigcta" href="#/cat/greyushchiy-kabel"><b>Ещё больше товаров и предложений в нашем каталоге — жми!</b>${svg('hand', 48)}</a></div></section>
@@ -225,11 +225,6 @@ function renderHome() {
       <button class="ptab ptab--sale" data-tab="sale" aria-pressed="false">Распродажа</button>
     </div>
     <div class="prodgrid" id="tabgrid" aria-live="polite">${grid(TAB_SETS.hit.slice(0, 8))}</div>
-  </div></section>
-
-  <section class="section"><div class="wrap">
-    <div class="sechead"><h2>Готовые комплекты под задачу</h2><p>Собрали всё необходимое — дешевле, чем по отдельности</p></div>
-    <div class="kits">${KITS.map(k => `<div class="kit"><div class="kit__ic">${svg(k.icon, 28)}</div><div class="kit__body"><b>${k.name}</b><ul>${k.items.map(x => `<li>${x}</li>`).join('')}</ul><div class="kit__foot"><div class="kit__price"><b class="tnum">${fmt(k.price)}</b><span class="old tnum">${fmt(k.old)}</span><span class="kit__save">−${fmt(k.old - k.price)}</span></div><button class="btn btn--blue btn--sm" data-addkit="${k.id}">${svg('cart', 16)} В корзину</button></div></div></div>`).join('')}</div>
   </div></section>
 
   <section class="section"><div class="wrap"><div class="about">
