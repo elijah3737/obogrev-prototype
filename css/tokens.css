@@ -4,8 +4,10 @@
   --color-blue:    #0058ff;   /* основная синяя кнопка/каталог/в корзину */
   --color-blue-d:  #0046cc;   /* hover */
   --color-blue-weak:#eaf0ff;
-  --color-yellow:  #ffd700;   /* найти / акции / распродажа */
+  --color-yellow:  #ffd700;   /* бейдж «экономия», распродажа-таб */
   --color-yellow-d:#f2c200;
+  --color-orange-l: #ffa23e;  /* светло-оранжевый: кнопки (найти/акции/CTA) */
+  --color-orange-l-d:#f79433;
   --color-red:     #ed1c24;   /* бейджи */
   --color-price:   #f0392a;   /* цена */
   --color-orange:  #f58220;   /* акцент: о компании, CTA, пилюли */
