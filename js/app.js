@@ -130,7 +130,7 @@ const CAT_IMG = {
   'elektricheskie-tyeplye-poly': 'cat/floor.jpg',
   'termoregulyatory-reguliruyushchaya-apparatura': 'cat/electric.jpg',
   'sistemy-zashchity-ot-protechek-vody': 'kits/protechka.jpg',
-  'komplektuyushchie-dlya-kabeley-teplykh-polov': 'cat/electric.jpg',
+  'komplektuyushchie-dlya-kabeley-teplykh-polov': 'kits/vodoprovod.jpg',
   'korobki-soedinitelnye-vzryvozashchishchennye': 'cat/electric.jpg',
   'gofrirovannaya-truba-i-fitingi': 'cat/plumbing.jpg',
   'otopitelnoe-oborudovanie': 'cat/climate.jpg',
@@ -181,6 +181,13 @@ function card(p) {
   </article>`;
 }
 function grid(list) { return list.length ? list.map(card).join('') : '<div class="empty" style="grid-column:1/-1">Ничего не найдено.</div>'; }
+function ppSlider(title, items) {
+  if (!items.length) return '';
+  return `<div class="pp__sec ppslider">
+    <div class="ppslider__head"><h2>${title}</h2><div class="ppslider__nav"><button type="button" class="ppslider__arr" data-sprev aria-label="Назад">${svg('chevL', 18)}</button><button type="button" class="ppslider__arr" data-snext aria-label="Вперёд">${svg('chevR', 18)}</button></div></div>
+    <div class="ppslider__track">${items.map(card).join('')}</div>
+  </div>`;
+}
 
 /* ---------- ГЛАВНАЯ ---------- */
 const SLIDES = [
@@ -509,8 +516,8 @@ function renderProduct(id) {
     <div class="pp__sec" id="allspecs"><h2>Характеристики</h2>
       <table class="pp__spectable"><tbody>${rows.concat([['Гарантия', years(p.guarantee)],['Наличие', (p.stock === 'in' ? 'В наличии · ' : 'Под заказ · ') + p.delivery]]).map(r => `<tr><td>${r[0]}</td><td>${r[1]}</td></tr>`).join('')}</tbody></table>
     </div>
-    ${cross.length ? `<div class="pp__sec"><h2>С этим берут</h2><div class="prodgrid">${cross.map(card).join('')}</div></div>` : ''}
-    ${seen.length ? `<div class="pp__sec"><h2>Вы недавно смотрели</h2><div class="prodgrid">${seen.map(card).join('')}</div></div>` : ''}
+    ${ppSlider('С этим берут', cross)}
+    ${ppSlider('Вы недавно смотрели', seen)}
   </div></section>`;
   mainEl().querySelectorAll('.vbtn').forEach(b => b.addEventListener('click', () => { mainEl().querySelectorAll('.vbtn').forEach(x => x.setAttribute('aria-pressed', 'false')); b.setAttribute('aria-pressed', 'true'); }));
   mainEl().querySelectorAll('.pp__thumb').forEach(t => t.addEventListener('click', () => { mainEl().querySelectorAll('.pp__thumb').forEach(x => x.classList.remove('on')); t.classList.add('on'); }));
@@ -519,6 +526,13 @@ function renderProduct(id) {
   const mail = $('[data-mail]'); if (mail) mail.addEventListener('click', () => openForm('Заявка на почту', 'Пришлём счёт и КП на email. Удобно для юрлиц.', 'Отправить'));
   const all = $('[data-allspecs]'); if (all) all.addEventListener('click', () => $('#allspecs').scrollIntoView({ behavior: 'smooth' }));
   $$('[data-share]').forEach(b => b.addEventListener('click', () => toast('Ссылка скопирована')));
+  mainEl().querySelectorAll('.ppslider').forEach(s => {
+    const track = s.querySelector('.ppslider__track');
+    const step = () => ((track.querySelector('.pcard') || {}).offsetWidth || 280) + 16;
+    const p = s.querySelector('[data-sprev]'), n = s.querySelector('[data-snext]');
+    if (p) p.addEventListener('click', () => track.scrollBy({ left: -step() * 2, behavior: 'smooth' }));
+    if (n) n.addEventListener('click', () => track.scrollBy({ left: step() * 2, behavior: 'smooth' }));
+  });
   bindCards();
 }
 
