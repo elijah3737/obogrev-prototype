@@ -135,7 +135,7 @@ img, svg { display: block; max-width: 100%; }
 .t-orange { background: #ffeede; color: #f58220; } .t-cyan { background: #e2f5ff; color: #1aa3e0; }
 
 /* ============ YELLOW CTA BANNER ============ */
-.bigcta { display: flex; align-items: center; justify-content: space-between; gap: var(--space-16); background: var(--color-yellow); border-radius: var(--radius-lg); padding: var(--space-20) var(--space-32); }
+.bigcta { display: flex; align-items: center; justify-content: space-between; gap: var(--space-16); background: var(--color-orange-l); border-radius: var(--radius-lg); padding: var(--space-20) var(--space-32); }
 .bigcta b { font-family: var(--font-display); font-weight: 800; font-size: clamp(1.1rem, 2.2vw, 1.7rem); text-transform: uppercase; color: #1a1d24; letter-spacing: -0.01em; }
 .bigcta svg { color: #1a1d24; flex: none; }
 
@@ -151,8 +151,8 @@ img, svg { display: block; max-width: 100%; }
 .ptab { font-family: var(--font-display); font-weight: 700; font-size: var(--text-base); padding: 11px 24px; border-radius: var(--radius-pill); border: 2px solid var(--color-blue); background: #fff; color: var(--color-blue); transition: all var(--dur) var(--ease-out); }
 .ptab:hover { background: var(--color-blue-weak); }
 .ptab[aria-pressed="true"] { background: var(--color-blue); color: #fff; }
-.ptab--sale { border-color: var(--color-yellow); color: #1a1d24; }
-.ptab--sale[aria-pressed="true"] { background: var(--color-yellow); color: #1a1d24; }
+.ptab--sale { border-color: var(--color-orange-l); color: #1a1d24; }
+.ptab--sale[aria-pressed="true"] { background: var(--color-orange-l); color: #1a1d24; }
 
 /* ============ PRODUCT CARD ============ */
 .prodgrid { display: grid; grid-template-columns: repeat(4, minmax(0,1fr)); gap: var(--space-12); }
