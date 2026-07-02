@@ -77,8 +77,12 @@ function buildShell() {
       return `<div class="navitem"><a href="${it.href}">${it.name}</a><div class="navdrop">${subs}</div></div>`;
     }
     const c = catBy(it.slug);
-    const subs = c.subs.map(s => `<a href="#/cat/${c.slug}">${s}</a>`).join('') + `<a class="navdrop__all" href="#/cat/${c.slug}">Все товары →</a>`;
-    return `<div class="navitem"><a href="#/cat/${c.slug}">${it.name}</a><div class="navdrop">${subs}</div></div>`;
+    const brands = CAT_BRANDS[c.slug] || [];
+    const cols = c.subs.map((s, i) => {
+      const bs = colBrands(brands, i);
+      return `<div class="megacol"><a class="megacol__h" href="#/cat/${c.slug}">${s}</a>${bs.length ? `<div class="megacol__b">${bs.map(b => `<a href="#/cat/${c.slug}">${b}</a>`).join('')}</div>` : ''}</div>`;
+    }).join('');
+    return `<div class="navitem"><a href="#/cat/${c.slug}">${it.name}</a><div class="navdrop navdrop--mega"><div class="megawrap">${cols}</div><a class="navdrop__all" href="#/cat/${c.slug}">Все товары в разделе «${it.name}» →</a></div></div>`;
   }).join('');
   $('#mega').innerHTML = `<div class="wrap"><div class="mega__grid">` +
     CATS.map(c => `<a class="mega__item" href="#/cat/${c.slug}">${svg(c.icon, 26)}<span><b>${c.name}</b><small>${byCat(c.slug).length} товаров</small></span>${c.dev ? '<span class="mega__dev">скоро</span>' : ''}</a>`).join('') + `</div></div>`;
@@ -136,6 +140,20 @@ const CAT_IMG = {
   'elektrika': 'cat/electric.jpg',
   'santehnika': 'cat/plumbing.jpg',
 };
+const CAT_BRANDS = {
+  'greyushchiy-kabel': ['SAMREG', 'Теплолюкс', 'ССТ', 'Devi', 'Nexans', 'EASTEC', 'Обогрев Люкс', 'Heatus'],
+  'elektricheskie-tyeplye-poly': ['Обогрев Люкс', 'Thermo', 'Caleo', 'Grand Meyer', 'Русское тепло', 'Electrolux', 'СТН', 'Золотое сечение'],
+  'termoregulyatory-reguliruyushchaya-apparatura': ['Terneo', 'Devi', 'Теплолюкс', 'Grand Meyer', 'Welrok', 'Eberle', 'Caleo', 'ЭРА'],
+  'komplektuyushchie-dlya-kabeley-teplykh-polov': ['Обогрев Люкс', 'Thermo', 'ССТ', 'Rexant', 'Devi', 'КВТ'],
+  'sistemy-zashchity-ot-protechek-vody': ['Neptun', 'Аквасторож', 'Гидролок', 'Аквастоп', 'Стоп поток'],
+  'gofrirovannaya-truba-i-fitingi': ['Neptun', 'Lavita', 'Kofulso', 'ТиС', 'Fado'],
+};
+function colBrands(brands, i, n = 4) {
+  if (!brands || !brands.length) return [];
+  const out = [];
+  for (let k = 0; k < n; k++) out.push(brands[(i * 2 + k) % brands.length]);
+  return [...new Set(out)];
+}
 function cardMedia(p) {
   const img = CAT_IMG[p.cat] || 'cat/cable.jpg';
   return `<a class="pcard__media" href="#/product/${p.id}" aria-label="${p.name}">

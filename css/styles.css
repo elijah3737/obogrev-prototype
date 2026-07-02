@@ -62,9 +62,9 @@ img, svg { display: block; max-width: 100%; }
 
 /* ============ NAV ============ */
 .nav { border-top: var(--rule); border-bottom: var(--rule); }
-.nav__in { display: flex; align-items: center; gap: var(--space-8); min-height: 39px; }
+.nav__in { display: flex; align-items: center; gap: var(--space-8); min-height: 39px; position: relative; }
 .nav__links { display: flex; flex-wrap: nowrap; flex: 1; gap: 2px; }
-.navitem { position: relative; }
+.navitem { position: static; }
 .navitem > a { display: inline-flex; align-items: center; gap: 4px; padding: 9px 12px; font-family: var(--font-display); font-weight: 700; font-size: 14px; color: var(--color-ink); white-space: nowrap; transition: color var(--dur) var(--ease-out); }
 .navitem > a::after { content: "▾"; font-size: 9px; color: var(--color-ink-3); }
 .navitem:hover > a { color: var(--color-blue); }
@@ -73,6 +73,15 @@ img, svg { display: block; max-width: 100%; }
 .navdrop a { display: block; padding: 8px 18px; font-size: 14px; font-weight: 500; color: var(--color-ink-2); white-space: nowrap; transition: background var(--dur) var(--ease-out), color var(--dur) var(--ease-out); }
 .navdrop a:hover { background: var(--color-blue-weak); color: var(--color-blue); }
 .navdrop__all { border-top: var(--rule); margin-top: var(--space-4); padding-top: 12px !important; color: var(--color-blue) !important; font-weight: 700 !important; }
+/* мега-меню категорий */
+.navdrop--mega { left: 0; right: 0; min-width: 0; padding: 24px 28px 20px; border-radius: 0 0 16px 16px; }
+.navdrop--mega .megawrap { display: grid; grid-template-columns: repeat(auto-fill, minmax(178px, 1fr)); gap: 20px 30px; }
+.navdrop--mega .megacol__h { display: block; font-family: var(--font-display); font-weight: 800; font-size: 12.5px; letter-spacing: .02em; text-transform: uppercase; color: var(--color-navy); line-height: 1.25; padding: 0 0 8px; margin-bottom: 8px; border-bottom: 1px solid var(--color-line); white-space: normal; }
+.navdrop--mega .megacol__h:hover { color: var(--color-blue); background: none; }
+.navdrop--mega .megacol__b a { display: block; padding: 4px 0 4px 12px; font-size: 13px; font-weight: 500; color: var(--color-ink-2); position: relative; white-space: nowrap; }
+.navdrop--mega .megacol__b a::before { content: "•"; position: absolute; left: 0; color: var(--color-ink-3); }
+.navdrop--mega .megacol__b a:hover { color: var(--color-blue); background: none; }
+.navdrop--mega .navdrop__all { display: inline-block; margin-top: 18px; padding: 0 !important; border: 0; }
 .nav__sale { display: inline-flex; align-items: center; gap: 4px; background: var(--color-orange-l); color: #1a1d24; font-family: var(--font-display); font-weight: 800; font-size: 14px; padding: 7px 16px; border-radius: var(--radius-pill); white-space: nowrap; }
 .nav__sale:hover { background: var(--color-orange-l-d); }
 
