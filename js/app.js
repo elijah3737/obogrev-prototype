@@ -121,16 +121,28 @@ function badgeHtml(p) {
   if (p.facets.prim) return `<span class="pcard__badge b-blue">${p.facets.prim}</span>`;
   return '<span class="pcard__badge b-green">Новинка</span>';
 }
+const CAT_IMG = {
+  'greyushchiy-kabel': 'cat/cable.jpg',
+  'elektricheskie-tyeplye-poly': 'cat/floor.jpg',
+  'termoregulyatory-reguliruyushchaya-apparatura': 'cat/electric.jpg',
+  'sistemy-zashchity-ot-protechek-vody': 'kits/protechka.jpg',
+  'komplektuyushchie-dlya-kabeley-teplykh-polov': 'cat/electric.jpg',
+  'korobki-soedinitelnye-vzryvozashchishchennye': 'cat/electric.jpg',
+  'gofrirovannaya-truba-i-fitingi': 'cat/plumbing.jpg',
+  'otopitelnoe-oborudovanie': 'cat/climate.jpg',
+  'termochekhly': 'kits/vodoprovod.jpg',
+  'klimat-sistemy': 'cat/climate.jpg',
+  'osveshchenie': 'cat/light.jpg',
+  'elektrika': 'cat/electric.jpg',
+  'santehnika': 'cat/plumbing.jpg',
+};
 function cardMedia(p) {
-  const frames = [catBy(p.cat).icon, 'cert', 'box'];
-  return `<div class="pcard__media" data-media>
+  const img = CAT_IMG[p.cat] || 'cat/cable.jpg';
+  return `<a class="pcard__media" href="#/product/${p.id}" aria-label="${p.name}">
+      <img class="pcard__photo" src="assets/${img}" alt="${p.name}" loading="lazy">
       <span class="pcard__brand">${p.brand}</span>
-      <div class="pcard__track">${frames.map(ic => `<a class="pcard__frame" href="#/product/${p.id}" aria-label="${p.name}">${svg(ic, 92)}</a>`).join('')}</div>
-      <button type="button" class="pcard__marr pcard__marr--prev" data-mprev aria-label="Предыдущее фото">${svg('chevL', 18)}</button>
-      <button type="button" class="pcard__marr pcard__marr--next" data-mnext aria-label="Следующее фото">${svg('chevR', 18)}</button>
       <div class="pcard__pills">${pills(p)}</div>
-    </div>
-    <div class="pcard__dots" role="tablist" aria-label="Фото товара">${frames.map((_, i) => `<button type="button" class="${i === 0 ? 'on' : ''}" data-mdot="${i}" aria-label="Фото ${i + 1}" aria-current="${i === 0}"></button>`).join('')}</div>`;
+    </a>`;
 }
 function card(p) {
   return `<article class="pcard" data-id="${p.id}">
