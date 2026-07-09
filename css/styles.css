@@ -42,8 +42,8 @@ img, svg { display: block; max-width: 100%; }
 .header { position: sticky; top: 0; z-index: 50; background: #fff; }
 .header__main { display: grid; grid-template-columns: auto auto 1fr auto; align-items: center; gap: var(--space-16); padding-block: 14px; }
 .logo { display: inline-flex; align-items: center; gap: 10px; }
-.logo__mark { width: 40px; height: 40px; flex: none; border-radius: 50%; background: radial-gradient(circle at center, var(--color-red) 0 20%, #fff 20% 32%, var(--color-red) 32% 46%, #fff 46% 58%, var(--color-red) 58% 100%); position: relative; }
-.logo__mark span { position: absolute; inset: 32%; border-radius: 50%; background: var(--color-red); }
+.logo__mark { width: 40px; height: 40px; flex: none; background: url("data:image/svg+xml,%3Csvg%20xmlns%3D%27http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%27%20viewBox%3D%270%200%2056%2056%27%3E%3Crect%20width%3D%2756%27%20height%3D%2756%27%20rx%3D%2713%27%20fill%3D%27%2316306b%27%2F%3E%3Cpath%20d%3D%27M14%2041%20V17%20h5%20l9%2013%20l9-13%20h5%20V41%20h-6%20V27%20l-8%2011%20l-8-11%20V41%20Z%27%20fill%3D%27%23ffffff%27%2F%3E%3C%2Fsvg%3E") center / contain no-repeat; }
+.logo__mark span { display: none; }
 .logo__txt { font-family: var(--font-display); font-weight: 800; font-size: 1.4rem; letter-spacing: -0.02em; color: var(--color-ink); line-height: 1; }
 .logo__txt small { display: block; font-weight: 600; font-size: 8.5px; letter-spacing: 0.03em; text-transform: uppercase; color: var(--color-ink-3); margin-top: 3px; }
 .catbtn { display: inline-flex; align-items: center; gap: 10px; height: 51px; background: var(--color-blue); color: #fff; font-family: var(--font-display); font-weight: 500; font-size: 17px; padding: 0 33px; border: 0; border-radius: 10px; transition: background var(--dur) var(--ease-out); }
@@ -367,8 +367,8 @@ img, svg { display: block; max-width: 100%; }
 .footer .wrap { padding-block: var(--space-32) var(--space-20); }
 .footer__top { display: flex; justify-content: space-between; align-items: center; gap: var(--space-24); padding-bottom: var(--space-24); border-bottom: 1px solid rgba(255,255,255,.09); flex-wrap: wrap; }
 .footer__brand { display: inline-flex; align-items: center; gap: 12px; }
-.footer__mark { width: 44px; height: 44px; flex: none; border-radius: 12px; background: radial-gradient(circle at center, var(--color-red) 0 20%, #fff 20% 32%, var(--color-red) 32% 46%, #fff 46% 58%, var(--color-red) 58% 100%); position: relative; }
-.footer__mark span { position: absolute; inset: 34%; border-radius: 50%; background: var(--color-red); }
+.footer__mark { width: 44px; height: 44px; flex: none; background: url("data:image/svg+xml,%3Csvg%20xmlns%3D%27http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%27%20viewBox%3D%270%200%2056%2056%27%3E%3Crect%20width%3D%2756%27%20height%3D%2756%27%20rx%3D%2713%27%20fill%3D%27%23ffffff%27%2F%3E%3Cpath%20d%3D%27M14%2041%20V17%20h5%20l9%2013%20l9-13%20h5%20V41%20h-6%20V27%20l-8%2011%20l-8-11%20V41%20Z%27%20fill%3D%27%2316306b%27%2F%3E%3C%2Fsvg%3E") center / contain no-repeat; }
+.footer__mark span { display: none; }
 .footer__bt { font-family: var(--font-display); font-weight: 800; font-size: 1.35rem; color: #fff; line-height: 1; letter-spacing: -.02em; }
 .footer__bt small { display: block; font-weight: 600; font-size: 11px; letter-spacing: .02em; color: #7b828d; margin-top: 5px; }
 .footer__phones { display: flex; gap: var(--space-24); }
